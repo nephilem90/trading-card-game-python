@@ -13,7 +13,7 @@ help:
 	@echo "       clean venv, caches and eggs"
 
 run:
-	. ./venv/bin/activate  ; phyton app.py
+	. ./venv/bin/activate  ; python app.py
 
 install:
 	virtualenv ${VENV_NAME}
