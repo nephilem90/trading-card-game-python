@@ -2,7 +2,7 @@ import unittest
 from app.card import Card
 
 
-class CardTest(unittest.TestCase):
+class TestCard(unittest.TestCase):
     def test_creation(self):
         card = Card({'mana': 3})
         self.assertEqual(card.get_mana(), 3)
