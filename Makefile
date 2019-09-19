@@ -2,7 +2,7 @@ VENV_NAME?=venv
 SYSTEM_PYTHON?=python3
 PYTHON=${VENV_NAME}/bin/python
 
-.PHONY: clean venv install run
+.PHONY: clean venv install test
 .DEFAULT: help
 
 
@@ -12,8 +12,8 @@ help:
 	@echo "make clean"
 	@echo "       clean venv, caches and eggs"
 
-run:
-	. ./venv/bin/activate  ; python app.py
+test:
+	python -m unittest
 
 install:
 	virtualenv ${VENV_NAME}
