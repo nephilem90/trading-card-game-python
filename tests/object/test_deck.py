@@ -10,6 +10,19 @@ class TestDeck(unittest.TestCase):
         deck.add(card)
         self.assertEqual(card, deck.draw())
 
+    def test_if_empty_return_false(self):
+        deck = Deck()
+        self.assertFalse(deck.draw())
+
+    def test_shuffle_deck(self):
+        deck = Deck()
+        deck.add(1)
+        deck.add(2)
+        deck.add(3)
+        shuffle = MagicMock(name='shuffle')
+        deck.card_shuffle(shuffle)
+        shuffle.assert_called_once_with([1, 2, 3])
+
 
 if __name__ == '__main__':
     unittest.main()
