@@ -18,7 +18,13 @@ class TestPlayer(unittest.TestCase):
         player = Player(None, deck)
         player.draw_card()
         deck.pick.assert_called_once_with()
-    # todo test 1 damage if when call draw deck have no card
+
+    def test_pick_no_card_make_damage(self):
+        deck = MagicMock(name='Deck')
+        deck.pick.return_value = False
+        player = Player(1, deck)
+        player.draw_card()
+        self.assertEqual(0, player.get_life_point())
     # todo test play card
     # todo
 

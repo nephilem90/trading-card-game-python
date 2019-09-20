@@ -15,5 +15,12 @@ class Player:
         else:
             return True
 
+    def get_life_point(self):
+        return self.life_point
+
     def draw_card(self):
-        self.deck.pick()
+        card = self.deck.pick()
+        if card:
+            return
+        else:
+            self.receive_damage(1)
