@@ -5,7 +5,7 @@ class Deck:
     def add(self, card):
         self.cards.append(card)
 
-    def draw(self):
+    def pick(self):
         return_value = False
         if len(self.cards) > 0:
             return_value = self.cards.pop()
