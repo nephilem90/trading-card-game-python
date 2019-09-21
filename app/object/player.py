@@ -1,26 +1,36 @@
+
+import random
+
+
 class Player:
     def __init__(self, life_point, deck):
         if not isinstance(life_point, int):
             life_point = 0
         self.life_point = life_point
         self.deck = deck
+        self.mana = 0
+        self.hand_cards = []
 
     def receive_damage(self, damage):
         self.life_point = self.life_point - damage
         return self
 
-    def is_defeat(self):
-        if self.life_point > 0:
-            return False
-        else:
-            return True
-
     def get_life_point(self):
         return self.life_point
 
+    def add_mana(self, add_to_pool):
+        self.mana = self.mana + add_to_pool
+        return self
+
+    def get_mana(self):
+        return self.mana
+
     def draw_card(self):
-        card = self.deck.pick()
-        if card:
-            return
-        else:
-            self.receive_damage(1)
+        self.hand_cards.append(self.deck.pick())
+        return self
+
+    def shuffle_deck(self):
+        self.deck.card_shuffle(random.shuffle)
+
+    def get_hand_card_number(self):
+        return len(self.hand_cards)
