@@ -10,6 +10,7 @@ class Player:
         self.deck = deck
         self.mana = 0
         self.hand_cards = []
+        self.hand_cards_cost = []
 
     def receive_damage(self, damage):
         self.life_point = self.life_point - damage
@@ -26,7 +27,11 @@ class Player:
         return self.mana
 
     def draw_card(self):
-        self.hand_cards.append(self.deck.pick())
+        card = self.deck.pick()
+        cost = card.get_mana()
+        self.hand_cards_cost.append(cost)
+        self.hand_cards_cost.sort(reverse=True)
+        self.hand_cards.insert(self.hand_cards_cost.index(cost), card)
         return self
 
     def shuffle_deck(self):
@@ -34,3 +39,8 @@ class Player:
 
     def get_hand_card_number(self):
         return len(self.hand_cards)
+
+    def play_cards(self):
+        min_cost = self.hand_cards_cost.pop()
+        if min_cost > self.mana:
+            return False

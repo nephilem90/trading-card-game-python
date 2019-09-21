@@ -16,10 +16,13 @@ class TestPlayer(unittest.TestCase):
 
     def test_draw_card_from_deck(self):
         deck = MagicMock(name='Deck')
-        deck.pick.return_value = random.randint(1111, 9999)
+        card = MagicMock(name='Card')
+        card.get_mana.return_value = random.randint(1111, 9999)
+        deck.pick.return_value = card
         player = Player(None, deck)
         player.draw_card()
         deck.pick.assert_called_once_with()
+        card.get_mana.assert_called_once_with()
         self.assertEqual(1, player.get_hand_card_number())
 
     def test_shuffle_deck(self):
@@ -41,12 +44,6 @@ class TestPlayer(unittest.TestCase):
         self.assertFalse(player.play_cards())
         deck.pick.assert_called_once_with()
         card.get_mana.assert_called_once_with()
-
-    def test_play_card(self):
-        deck = MagicMock(name='Deck')
-        deck.pick.return_value = False
-        player = Player(1, deck)
-        player.draw_card()
 
     # todo giocare carta
     # todo mischiare mazzo
