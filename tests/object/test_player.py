@@ -21,13 +21,11 @@ class TestPlayer(unittest.TestCase):
 
     def test_draw_card_from_deck(self):
         deck = MagicMock(name='Deck')
-        card = MagicMock(name='Card')
-        card.get_mana.return_value = random.randint(1111, 9999)
+        card = {'mana': random.randint(1111, 9999)}
         deck.pick.return_value = card
         player = Player(None, deck)
         player.draw_card()
         deck.pick.assert_called_once_with()
-        card.get_mana.assert_called_once_with()
         self.assertEqual(1, player.get_hand_card_number())
 
     def test_shuffle_deck(self):
@@ -38,9 +36,8 @@ class TestPlayer(unittest.TestCase):
 
     def test_player_can_play_card_if_hasnt_mana(self):
         deck = MagicMock(name='Deck')
-        card = MagicMock(name='Card')
         mana_cost = random.randint(1111, 9999)
-        card.get_mana.return_value = mana_cost
+        card = {'mana': mana_cost}
         deck.pick.return_value = card
         player = Player(None, deck)
         player.add_mana(mana_cost - 1)
@@ -48,16 +45,11 @@ class TestPlayer(unittest.TestCase):
 
         self.assertEqual(0, player.play_cards())
         deck.pick.assert_called_once_with()
-        card.get_mana.assert_called_once_with()
 
     def test_player_can_play_card_when_has_mana(self):
         deck = MagicMock(name='Deck')
-        card1 = MagicMock(name='Card1')
-        card1.get_mana.return_value = 1
-        card1.get_damage.return_value = 1
-        card2 = MagicMock(name='Card2')
-        card2.get_mana.return_value = 2
-        card2.get_damage.return_value = 2
+        card1 = {'mana': 1, 'damage': 1}
+        card2 = {'mana': 2, 'damage': 2}
         deck.pick.side_effect = [card1, card2]
 
         player = Player(None, deck)
@@ -66,8 +58,6 @@ class TestPlayer(unittest.TestCase):
         player.draw_card()
 
         self.assertEqual(3, player.play_cards())
-        card1.get_damage.assert_called_once_with()
-        card2.get_damage.assert_called_once_with()
 
 
 if __name__ == '__main__':

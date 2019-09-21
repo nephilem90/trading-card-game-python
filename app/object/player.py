@@ -27,7 +27,7 @@ class Player:
 
     def draw_card(self):
         card = self.deck.pick()
-        cost = card.get_mana()
+        cost = card['mana']
         self.hand_cards_cost.append(cost)
         self.hand_cards_cost.sort(reverse=True)
         self.hand_cards.insert(self.hand_cards_cost.index(cost), card)
@@ -44,6 +44,6 @@ class Player:
         while len(self.hand_cards_cost) > 0 and self.mana >= self.hand_cards_cost[-1]:
             self.hand_cards_cost.pop()
             card = self.hand_cards.pop()
-            damage = damage + card.get_damage()
-            self.mana = self.mana - card.get_mana()
+            damage = damage + card['damage']
+            self.mana = self.mana - card['mana']
         return damage
