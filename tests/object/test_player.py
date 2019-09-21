@@ -7,15 +7,19 @@ import random
 class TestPlayer(unittest.TestCase):
     def test_get_life_point(self):
         life_point = random.randint(1111, 9999)
-        player = Player(life_point, None)
+        player = Player(life_point)
         self.assertEqual(life_point, player.get_life_point())
 
     def test_damage(self):
-        player = Player(20, None)
+        player = Player(20)
         self.assertEqual(15, player.receive_damage(5).get_life_point())
 
+    def test_no_deck_draw(self):
+        player = Player(20)
+        self.assertFalse(player.draw_card())
+
     def add_mana(self):
-        player = Player(None, None)
+        player = Player(None)
         player.add_mana(1)
         self.assertEqual(1, player.get_mana())
 
@@ -23,14 +27,16 @@ class TestPlayer(unittest.TestCase):
         deck = MagicMock(name='Deck')
         card = {'mana': random.randint(1111, 9999)}
         deck.pick.return_value = card
-        player = Player(None, deck)
+        player = Player(None)
+        player.add_deck(deck)
         player.draw_card()
         deck.pick.assert_called_once_with()
         self.assertEqual(1, player.get_hand_card_number())
 
     def test_shuffle_deck(self):
         deck = MagicMock(name='Deck')
-        player = Player(None, deck)
+        player = Player(None)
+        player.add_deck(deck)
         player.shuffle_deck()
         deck.card_shuffle.assert_called_once_with(random.shuffle)
 
@@ -39,7 +45,8 @@ class TestPlayer(unittest.TestCase):
         mana_cost = random.randint(1111, 9999)
         card = {'mana': mana_cost}
         deck.pick.return_value = card
-        player = Player(None, deck)
+        player = Player(None)
+        player.add_deck(deck)
         player.add_mana(mana_cost - 1)
         player.draw_card()
 
@@ -52,7 +59,8 @@ class TestPlayer(unittest.TestCase):
         card2 = {'mana': 2, 'damage': 2}
         deck.pick.side_effect = [card1, card2]
 
-        player = Player(None, deck)
+        player = Player(None)
+        player.add_deck(deck)
         player.add_mana(3)
         player.draw_card()
         player.draw_card()
