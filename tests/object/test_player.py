@@ -5,6 +5,11 @@ import random
 
 
 class TestPlayer(unittest.TestCase):
+    def test_get_life_point(self):
+        life_point = random.randint(1111, 9999)
+        player = Player(life_point, None)
+        self.assertEqual(life_point, player.get_life_point())
+
     def test_damage(self):
         player = Player(20, None)
         self.assertEqual(15, player.receive_damage(5).get_life_point())
@@ -46,9 +51,6 @@ class TestPlayer(unittest.TestCase):
         card.get_mana.assert_called_once_with()
 
     # todo giocare carta
-    # todo mischiare mazzo
-    # todo mostrare punti vita
-    # todo acquisisci mana
 
 
 if __name__ == '__main__':
