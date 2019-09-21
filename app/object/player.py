@@ -1,4 +1,3 @@
-
 import random
 
 
@@ -41,6 +40,10 @@ class Player:
         return len(self.hand_cards)
 
     def play_cards(self):
-        min_cost = self.hand_cards_cost.pop()
-        if min_cost > self.mana:
-            return False
+        damage = 0
+        while len(self.hand_cards_cost) > 0 and self.mana >= self.hand_cards_cost[-1]:
+            self.hand_cards_cost.pop()
+            card = self.hand_cards.pop()
+            damage = damage + card.get_damage()
+            self.mana = self.mana - card.get_mana()
+        return damage

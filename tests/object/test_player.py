@@ -46,11 +46,28 @@ class TestPlayer(unittest.TestCase):
         player.add_mana(mana_cost - 1)
         player.draw_card()
 
-        self.assertFalse(player.play_cards())
+        self.assertEqual(0, player.play_cards())
         deck.pick.assert_called_once_with()
         card.get_mana.assert_called_once_with()
 
-    # todo giocare carta
+    def test_player_can_play_card_when_has_mana(self):
+        deck = MagicMock(name='Deck')
+        card1 = MagicMock(name='Card1')
+        card1.get_mana.return_value = 1
+        card1.get_damage.return_value = 1
+        card2 = MagicMock(name='Card2')
+        card2.get_mana.return_value = 2
+        card2.get_damage.return_value = 2
+        deck.pick.side_effect = [card1, card2]
+
+        player = Player(None, deck)
+        player.add_mana(3)
+        player.draw_card()
+        player.draw_card()
+
+        self.assertEqual(3, player.play_cards())
+        card1.get_damage.assert_called_once_with()
+        card2.get_damage.assert_called_once_with()
 
 
 if __name__ == '__main__':
