@@ -10,6 +10,13 @@ class GameTest(unittest.TestCase):
         game = Game(player_one, player_two)
         self.assertEqual([player_one, player_two], game.get_players())
 
+    def test_players_start_with_twenty_life_point(self):
+        player_one = MagicMock(name='p1')
+        player_two = MagicMock(name='p2')
+        game = Game(player_one, player_two)
+        player_two.assert_called_once_with(20)
+        player_one.assert_called_once_with(20)
+
 
 if __name__ == '__main__':
     unittest.main()
