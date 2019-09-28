@@ -13,3 +13,10 @@ class Deck:
 
     def card_shuffle(self, shuffle_function):
         shuffle_function(self.cards)
+
+    @classmethod
+    def generate(cls, cards_cost):
+        deck = cls()
+        for cost in cards_cost:
+            deck.add({'mana': cost, 'damage': cost})
+        return deck

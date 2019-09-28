@@ -23,6 +23,17 @@ class TestDeck(unittest.TestCase):
         deck.card_shuffle(shuffle)
         shuffle.assert_called_once_with([{'mana': 1}, {'mana': 2}, {'mana': 3}])
 
+    def test_deck_generator(self):
+        card_cost = [0, 0, 1, 2]
+        deck = Deck.generate(card_cost)
+        cards_expected = [
+            {'mana': 0, 'damage': 0},
+            {'mana': 0, 'damage': 0},
+            {'mana': 1, 'damage': 1},
+            {'mana': 2, 'damage': 2},
+        ]
+        self.assertEqual(deck.cards, cards_expected)
+
 
 if __name__ == '__main__':
     unittest.main()
