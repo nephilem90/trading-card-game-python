@@ -14,8 +14,9 @@ class GameTest(unittest.TestCase):
         player_one = MagicMock(name='p1')
         player_two = MagicMock(name='p2')
         game = Game(player_one, player_two)
-        player_two.assert_called_once_with(20)
-        player_one.assert_called_once_with(20)
+        player_two.set_life_point.assert_called_once_with(20)
+        player_one.set_life_point.assert_called_once_with(20)
+        self.assertEqual(game.get_players(), [player_one, player_two])
 
 
 if __name__ == '__main__':

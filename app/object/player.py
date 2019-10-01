@@ -26,6 +26,9 @@ class Player:
         self.mana = self.mana + add_to_pool
         return self
 
+    def set_life_point(self, life_pint):
+        self.life_point = life_pint
+
     def get_mana(self):
         return self.mana
 
