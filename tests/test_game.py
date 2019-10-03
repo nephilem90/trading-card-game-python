@@ -1,6 +1,7 @@
 import unittest
 from app.game import Game
 from unittest.mock import MagicMock
+import random
 
 
 class GameTest(unittest.TestCase):
@@ -57,6 +58,18 @@ class GameTest(unittest.TestCase):
         player_one.draw_card.assert_called_once_with()
         player_one.add_mana.assert_called_once_with(1)
         self.assertFalse(is_defeat)
+
+    def test_second_player_get_damage(self):
+        player_one = MagicMock(name='p1')
+        player_two = MagicMock(name='p2')
+        player_one.get_life_point.side_effect = [2, 1]
+        player_one.draw_card.return_value = True
+        damage = random.randint(1111, 9999)
+        player_one.play_cards.return_value = damage
+        game = Game(player_one, player_two)
+        is_defeat = game.play_turn()
+        player_two.receive_damage.assert_called_once_with(damage)
+        self.assertTrue(is_defeat)
 
 
 if __name__ == '__main__':

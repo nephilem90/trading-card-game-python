@@ -7,6 +7,7 @@ class Game:
         return self.players
 
     def play_turn(self):
+        next_player = (self.next + 1) % 2
         if int(self.players[self.next].get_life_point()) <= 0:
             return False
         self.players[self.next].add_mana(1)
@@ -15,6 +16,7 @@ class Game:
             if int(self.players[self.next].get_life_point()) <= 0:
                 return False
         else:
-            self.players[self.next].play_cards()
-        self.next = (self.next + 1) % 2
+            damage = self.players[self.next].play_cards()
+            self.players[next_player].receive_damage(damage)
+        self.next = next_player
         return True
