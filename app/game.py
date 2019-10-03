@@ -20,3 +20,8 @@ class Game:
             self.players[next_player].receive_damage(damage)
         self.next = next_player
         return True
+
+    def play_game(self):
+        while self.play_turn():
+            continue
+        return self.next

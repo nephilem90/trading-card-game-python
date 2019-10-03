@@ -71,6 +71,12 @@ class GameTest(unittest.TestCase):
         player_two.receive_damage.assert_called_once_with(damage)
         self.assertTrue(is_defeat)
 
+    def test_play_game(self):
+        player_one = MagicMock(name='p1')
+        player_two = MagicMock(name='p2')
+        game = Game(player_one, player_two)
+        player_one.get_life_point.return_value = 0
+        self.assertEqual(0, game.play_game())
 
 if __name__ == '__main__':
     unittest.main()
