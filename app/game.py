@@ -7,9 +7,12 @@ class Game:
         return self.players
 
     def play_turn(self):
+        if int(self.players[self.next].get_life_point()) <= 0:
+            return False
         self.players[self.next].add_mana(1)
         if not self.players[self.next].draw_card():
             self.players[self.next].receive_damage(1)
         else:
             self.players[self.next].play_cards()
         self.next = (self.next + 1) % 2
+        return True

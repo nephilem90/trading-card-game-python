@@ -39,6 +39,13 @@ class GameTest(unittest.TestCase):
         game.play_turn()
         game.get_players()[0].play_cards.assert_called_once_with()
 
+    def test_if_player_has_no_lv_is_defeat(self):
+        player_one = MagicMock(name='p1')
+        player_two = MagicMock(name='p2')
+        player_one.get_life_point.return_value = 0
+        game = Game(player_one, player_two)
+        self.assertFalse(game.play_turn())
+
 
 if __name__ == '__main__':
     unittest.main()
