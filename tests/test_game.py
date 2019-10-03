@@ -37,7 +37,7 @@ class GameTest(unittest.TestCase):
         player_one.draw_card.return_value = True
         game = Game(player_one, player_two)
         game.play_turn()
-        game.get_players()[0].play_cards.assert_called_once_with()
+        player_one.play_cards.assert_called_once_with()
 
     def test_if_player_has_no_lv_is_defeat(self):
         player_one = MagicMock(name='p1')
@@ -45,6 +45,18 @@ class GameTest(unittest.TestCase):
         player_one.get_life_point.return_value = 0
         game = Game(player_one, player_two)
         self.assertFalse(game.play_turn())
+
+    def test_player_defeat_if_has_one_lv_but_no_card(self):
+        player_one = MagicMock(name='p1')
+        player_two = MagicMock(name='p2')
+        player_one.get_life_point.side_effect = [1, 0]
+        player_one.draw_card.return_value = False
+        game = Game(player_one, player_two)
+        is_defeat = game.play_turn()
+        player_one.get_life_point.assert_called_with()
+        player_one.draw_card.assert_called_once_with()
+        player_one.add_mana.assert_called_once_with(1)
+        self.assertFalse(is_defeat)
 
 
 if __name__ == '__main__':

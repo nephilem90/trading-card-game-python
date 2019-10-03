@@ -12,6 +12,8 @@ class Game:
         self.players[self.next].add_mana(1)
         if not self.players[self.next].draw_card():
             self.players[self.next].receive_damage(1)
+            if int(self.players[self.next].get_life_point()) <= 0:
+                return False
         else:
             self.players[self.next].play_cards()
         self.next = (self.next + 1) % 2
